@@ -1,0 +1,412 @@
+/* ---------- variables ---------- */
+:root {
+  --c-bg: #f7f7f7;
+  --c-bg-card: #fff;
+  --c-text: #222;
+  --c-border: #ccc;
+  --c-accent: #005a9c; /* alto contraste */
+  --c-done: #2e8b57; /* verde accesible */
+  --dp-scale: 1; /* escala date-picker */
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #1b1b1b;
+    --c-bg-card: #262626;
+    --c-text: #e8e8e8;
+    --c-border: #555;
+    --c-accent: #4aa3ff;
+    --c-done: #58b66a;
+  }
+}
+
+/* ---------- base ---------- */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  scroll-behavior: smooth;
+}
+body {
+  padding: 1rem;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 1.4rem;
+  margin: 0 0 1rem;
+}
+
+/* ---------- generic buttons ---------- */
+button,
+.fileBtn,
+input[type="button"],
+input[type="submit"] {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--c-border);
+  background: var(--c-bg-card);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s background, 0.2s border-color, 0.2s color;
+}
+button:hover,
+.fileBtn:hover {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
+}
+button:focus,
+.fileBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--c-accent);
+}
+.fileBtn {
+  display: inline-block;
+}
+input[type="file"][hidden] {
+  display: none;
+}
+
+/* ---------- main tabs ---------- */
+#mainTabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+#mainTabs button {
+  flex: 1;
+}
+#mainTabs button.active {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
+}
+
+/* ---------- tab panels ---------- */
+[data-tab] {
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+/* ---------- progress wizard ---------- */
+#progressNav {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+#progressNav button {
+  flex: 1;
+  padding: 0.25rem 0;
+  border: none;
+  background: #e5e5e5;
+  border-radius: 2px;
+  color: #000;
+}
+#progressNav button.active {
+  background: var(--c-accent);
+  color: #fff;
+}
+#progressNav button.done {
+  background: var(--c-done);
+  color: #fff;
+}
+#progressContainer {
+  background: var(--c-border);
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+}
+#progressBar {
+  background: var(--c-accent);
+  height: 4px;
+  border-radius: 2px;
+  width: 0;
+  transition: width 0.3s;
+}
+
+/* ---------- forms ---------- */
+label {
+  display: block;
+  margin: 0.25rem 0;
+}
+select,
+textarea,
+input[type="text"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="search"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-bg-card);
+  color: var(--c-text);
+}
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* ---------- entries list ---------- */
+ul#entries {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+/* ---------- layout de la entrada ---------- */
+ul#entries li {
+  display: grid;
+  /* esfera | fecha | hora-rango | botón */
+  grid-template-columns: 38px 1fr 150px auto;
+  grid-template-rows: auto auto; /* fila1: texto  fila2: fecha-hora */
+  gap: 4px;
+  position: relative;
+}
+
+/* esfera */
+ul#entries li .ball {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  place-self: center;
+  width: 100%;
+
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+.ball.small {
+  transform: scale(0.6);
+}
+.ball.medium {
+  transform: scale(0.8);
+}
+.ball.large {
+  transform: scale(1);
+}
+.ball.verde {
+  background: #228b22;
+}
+.ball.ambar {
+  background: #ff8c00;
+}
+.ball.rojo {
+  background: #dc143c;
+}
+
+/* fila 1 — texto + lápiz */
+ul#entries li .txt {
+  grid-column: 2 / 4;
+  grid-row: 1;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ul#entries li .editBtn {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  border: none;
+  background: none;
+  color: var(--c-accent);
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* fila 2 — fecha y rango horario juntos */
+ul#entries li .date {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 0.85rem;
+}
+ul#entries li .timeFull {
+  grid-column: 3;
+  grid-row: 2;
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+/* otros botones dentro de li */
+ul#entries li button {
+  border: none;
+  background: none;
+  color: #b00;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* seleccionado / highlight */
+ul#entries li.selected {
+  background: rgba(0, 128, 255, 0.15);
+  border-color: var(--c-accent);
+}
+@keyframes flashBg {
+  0% {
+    background: #fffbcc;
+  }
+  100% {
+    background: transparent;
+  }
+}
+ul#entries li.highlight {
+  animation: flashBg 2s forwards;
+}
+
+/* ---------- swap fechas ---------- */
+#swapDates {
+  padding: 0.35rem 0.6rem;
+  font-size: 1rem;
+  border: 1px solid var(--c-border);
+  background: var(--c-bg-card);
+  margin-left: 0.25rem;
+}
+#swapDates:hover {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
+}
+
+/* ---------- confeti ---------- */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+  }
+}
+.confetti-piece {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  top: -10px;
+  border-radius: 1px;
+  animation: confettiFall 1.2s ease-out forwards;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ---------- filter & search ---------- */
+#filterPanel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+#filterPanel label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+input[type="search"] {
+  margin: 0.5rem 0;
+}
+
+/* ---------- util ---------- */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 600px) {
+  #mainTabs {
+    flex-direction: column;
+  }
+  #progressNav {
+    flex-direction: column;
+  }
+  ul#entries li {
+    margin-top: 1.5rem;
+    grid-template-columns: 32px 1fr auto;
+  }
+
+  ul#entries li .date {
+    grid-column: 2;
+    grid-row: 2;
+    margin-bottom: 0;
+  }
+  ul#entries li .time,
+  ul#entries li .dash,
+  ul#entries li .timeEnd {
+    grid-column: 2;
+  }
+  ul#entries li .editBtn {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+  }
+}
+
+/* ---------- date controls scale ---------- */
+input[type="date"],
+input[type="datetime-local"] {
+  transform: scale(1.25);
+  transform-origin: left top;
+  display: inline-block;
+  width: auto;
+  margin: 0.25rem 0;
+}
+
+/* ---------- date-picker (sin cambios salvo variables) ---------- */
+.datepicker {
+  position: absolute;
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  padding: calc(0.5rem * var(--dp-scale));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  font-size: calc(1rem * var(--dp-scale));
+  display: none;
+}
+.datepicker .calHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: calc(0.25rem * var(--dp-scale));
+}
+.datepicker .calHead button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: calc(1.1rem * var(--dp-scale));
+}
+.datepicker .calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, calc(3rem * var(--dp-scale)));
+  gap: calc(0.15rem * var(--dp-scale));
+}
+.datepicker .calGrid button {
+  border: none;
+  cursor: pointer;
+  background: var(--c-bg);
+  padding: calc(0.45rem * var(--dp-scale));
+  border-radius: 4px;
+}
+.datepicker .calGrid button.off {
+  opacity: 0.35;
+}
+.datepicker .calGrid button:hover {
+  background: var(--c-accent);
+  color: #fff;
+}
+.datepicker .calTime {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: calc(0.4rem * var(--dp-scale));
+}
+.datepicker .calTime input {
+  flex: 1;
+}
+.datepicker .calTime button {
+  padding: calc(0.25rem * var(--dp-scale)) calc(0.55rem * var(--dp-scale));
+}

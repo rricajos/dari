@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <title>Darink App</title>
+  <style>
+    #mainTabs button {
+      cursor: pointer
+    }
+
+    #mainTabs button.active {
+      font-weight: bold;
+      text-decoration: underline
+    }
+
+    #progressNav button {
+      cursor: pointer
+    }
+
+    #progressNav button.active {
+      font-weight: bold;
+      text-decoration: underline
+    }
+
+    #progressNav button.done {
+      opacity: .6
+    }
+
+    #progressContainer {
+      width: 100%;
+      height: 4px;
+      background: #ccc;
+      margin: 8px 0
+    }
+
+    #progressBar {
+      height: 100%;
+      width: 0;
+      background: #000
+    }
+
+    [data-tab] {
+      display: none
+    }
+  </style>
+  <script src="sw-register.js"></script>
+</head>
+
+<body>
+  <h1>Darink App</h1>
+
+  <nav id="mainTabs">
+    <button data-go="add" class="active">Añadir comida</button>
+    <button data-go="list">Lista / Estadística</button>
+    <button data-go="settings">Ajustes</button>
+  </nav>
+
+  <!-- TAB: Añadir -->
+  <div data-tab="add">
+    <nav id="progressNav">
+      <button data-step="0">Paso&nbsp;1</button>
+      <button data-step="1">Paso&nbsp;2</button>
+      <button data-step="2">Paso&nbsp;3</button>
+    </nav>
+    <div id="progressContainer">
+      <div id="progressBar"></div>
+    </div>
+
+    <form id="entryForm">
+      <input type="hidden" id="editIndex">
+      <section data-step="0">
+        <label>Lugar:
+          <select name="location" required>
+            <option value="casa">Casa</option>
+            <option value="colegio">Colegio/Trabajo</option>
+            <option value="otro">Otro</option>
+          </select>
+        </label><br>
+
+        <label>Inicio:
+          <input type="text" id="whenStart" class="dp" data-format="datetime">
+        </label><br>
+
+        <label>Fin:
+          <input type="text" id="whenEnd" class="dp" data-format="datetime">
+        </label>
+
+        <button type="button" id="swapDates">↔︎</button><br><br><br>
+
+        <button type="button" id="next0">Siguiente</button>
+      </section>
+
+
+      <section data-step="1" hidden>
+        <label>Qué:<br><textarea name="what" required></textarea></label><br>
+        <label>Cantidad:
+          <select name="amount">
+            <option value="poco">Poco</option>
+            <option value="normal">Normal</option>
+            <option value="mucho">Mucho</option>
+          </select>
+        </label><br>
+        <label>Proporción:
+          <select name="portion">
+            <option value="1/3">⅓</option>
+            <option value="2/3">⅔</option>
+            <option value="3/3">3⁄3</option>
+          </select>
+        </label><br>
+        <button type="button" id="back1">Atrás</button>
+        <button type="button" id="next1">Siguiente</button>
+      </section>
+
+      <section data-step="2" hidden>
+        <label>Cómo se sintió:
+          <select name="mood">
+            <option value="verde">🟢 Verde</option>
+            <option value="ambar">🟠 Ámbar</option>
+            <option value="rojo">🔴 Rojo</option>
+          </select>
+        </label><br>
+        <label>Comentario: <input type="text" name="comment"></label><br>
+        <button type="button" id="back2">Atrás</button>
+        <button type="submit">Guardar</button>
+        <button type="button" id="cancelEdit" hidden>Cancelar edición</button>
+      </section>
+    </form>
+  </div>
+
+  <!-- TAB: Lista / Estadística -->
+  <div data-tab="list">
+    <input type="search" id="searchTxt" placeholder="Buscar…">
+
+
+    <div id="filterPanel">
+      <label>Desde <input type="date" id="fFrom"></label>
+      <label>Hasta <input type="date" id="fTo"></label>
+      <label>Estado
+        <select id="fMood">
+          <option value="">Todos</option>
+          <option value="verde">🟢</option>
+          <option value="ambar">🟠</option>
+          <option value="rojo">🔴</option>
+        </select>
+      </label>
+      <button id="applyFilter">Filtrar</button>
+      <button id="clearFilter">Limpiar</button>
+    </div>
+
+    <button id="delSelBtn" disabled>Eliminar seleccionados</button>
+    <ul id="entries"></ul>
+
+    <div id="statsBox" hidden>
+      <canvas id="statsCanvas" width="300" height="150"></canvas>
+      <button id="closeStats">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- TAB: Ajustes -->
+  <div data-tab="settings">
+    <button id="exportBtn">Exportar base de datos</button>
+    <input type="file" id="importInput" accept=".json">
+    <button id="clearBtn">Borrar todo</button>
+  </div>
+
+  <script type="module" src="ui.js"></script>
+  <script type="module" src="datepicker.js"></script>
+
+</body>
+
+</html>
