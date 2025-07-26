@@ -1,8 +1,8 @@
 {
   "name": "Darink App",
   "short_name": "Darink",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/dari/",
+  "scope": "/dari/",
   "display": "fullscreen",
   "orientation": "portrait",
   "background_color": "#ffffff",
