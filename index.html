@@ -8,13 +8,8 @@
   <link rel="stylesheet" href="style.css">
   <title>Darink App</title>
   <style>
-    #mainTabs button {
-      cursor: pointer
-    }
-
-    #mainTabs button.active {
-      font-weight: bold;
-      text-decoration: underline
+    h1 {
+      margin: 0;
     }
 
     #progressNav button {
@@ -56,12 +51,13 @@
 </head>
 
 <body>
-  <h1>Darink App</h1>
+  <h1>Darink App </h1>
+  <i>versión 0.3 </i>
 
   <nav id="mainTabs">
-    <button data-go="add" class="active">Añadir</button>
-    <button data-go="list">Listar</button>
-    <button data-go="settings">Ajustes</button>
+    <button data-go="add" class="active">🚀 Añadir</button>
+    <button data-go="list">📋 Listar</button>
+    <button data-go="settings">⚙️ Ajustar</button>
   </nav>
 
   <!-- TAB: Añadir -->
@@ -87,21 +83,22 @@
         </label><br>
 
         <label>Inicio:
-          <input type="text" id="whenStart" class="dp" data-format="datetime">
+          <input type="date" id="whenStart" class="dp" data-format="datetime">
         </label><br>
 
         <label>Fin:
-          <input type="text" id="whenEnd" class="dp" data-format="datetime">
+          <input type="date" id="whenEnd" class="dp" data-format="datetime">
         </label>
 
-        <button type="button" id="swapDates">↔︎</button><br><br><br>
+        <button type="button" id="swapDates">↔︎</button><br><br>
 
         <button type="button" id="next0">Siguiente</button>
+
       </section>
 
 
       <section data-step="1" hidden>
-        <label>Qué:<br><textarea name="what" required></textarea></label><br>
+        <label>Qué:<br><textarea name="what" required autofocus></textarea></label><br>
         <label>Cantidad:
           <select name="amount">
             <option value="poco">Poco</option>
@@ -167,15 +164,24 @@
 
   <!-- TAB: Ajustes -->
   <div data-tab="settings">
-    <button id="exportBtn">Exportar base de datos</button>
-    <input type="file" id="importInput" accept=".json">
-    <button id="clearBtn">Borrar todo</button>
+    <h3>💾 Base de datos</h3>
+    <p>Tú alojas tu propia información en este dispositivo y eres el único responsable de su uso i difusión.</p>
+    <!-- <button id="exportBtn">Exportar base de datos acutal</button> -->
+    <button id="exportBtn">Administrar Base de Datos</button>
+    <!-- <input type="file" id="importInput" accept=".json"> -->
+    <!-- <button id="clearBtn">Borrar todo</button> -->
+
+  </div>
+
+  <!-- TAB: Ajustes  -->
+  <div data-tab="settings">
+    <h3>🌙 Instalar App</h3>
+    <p>Así podrás usar nuestras funciones sin conexión y trabajar con tu información aunque no tengas internet.</p>
 
 
     <button id="installBtn" hidden>Instalar app</button>
 
   </div>
-
   <script type="module" src="ui.js"></script>
   <script type="module" src="datepicker.js"></script>
 

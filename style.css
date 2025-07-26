@@ -6,7 +6,6 @@
   --c-border: #ccc;
   --c-accent: #005a9c; /* alto contraste */
   --c-done: #2e8b57; /* verde accesible */
-  --dp-scale: 1; /* escala date-picker */
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -36,10 +35,6 @@ body {
   padding: 1rem;
   line-height: 1.4;
 }
-h1 {
-  font-size: 1.4rem;
-  margin: 0 0 1rem;
-}
 
 /* ---------- generic buttons ---------- */
 button,
@@ -52,6 +47,7 @@ input[type="submit"] {
   border-radius: 4px;
   cursor: pointer;
   transition: 0.2s background, 0.2s border-color, 0.2s color;
+  text-decoration: none;
 }
 button:hover,
 .fileBtn:hover {
@@ -74,16 +70,18 @@ input[type="file"][hidden] {
 /* ---------- main tabs ---------- */
 #mainTabs {
   display: flex;
+  flex-flow: row nowrap;
   gap: 0.5rem;
-  margin-bottom: 1rem;
 }
 #mainTabs button {
   flex: 1;
+  cursor: pointer;
 }
 #mainTabs button.active {
   background: var(--c-accent);
   color: #fff;
   border-color: var(--c-accent);
+  font-weight: bold;
 }
 
 /* ---------- tab panels ---------- */
@@ -92,6 +90,7 @@ input[type="file"][hidden] {
   border: 1px solid var(--c-border);
   border-radius: 4px;
   padding: 1rem;
+  margin: 1rem 0;
 }
 
 /* ---------- progress wizard ---------- */
@@ -133,7 +132,6 @@ input[type="file"][hidden] {
 /* ---------- forms ---------- */
 label {
   display: block;
-  margin: 0.25rem 0;
 }
 select,
 textarea,
@@ -318,7 +316,11 @@ input[type="search"] {
 /* ---------- responsive ---------- */
 @media (max-width: 600px) {
   #mainTabs {
-    flex-direction: column;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
   }
   #progressNav {
     flex-direction: column;
@@ -348,11 +350,7 @@ input[type="search"] {
 /* ---------- date controls scale ---------- */
 input[type="date"],
 input[type="datetime-local"] {
-  transform: scale(1.25);
-  transform-origin: left top;
-  display: inline-block;
-  width: auto;
-  margin: 0.25rem 0;
+  margin: 0.25rem;
 }
 
 /* ---------- date-picker (sin cambios salvo variables) ---------- */
