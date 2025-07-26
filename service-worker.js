@@ -13,6 +13,14 @@ self.addEventListener("install", (e) =>
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)))
 );
 
-self.addEventListener("fetch", (e) =>
-  e.respondWith(caches.match(e.request).then((r) => r || fetch(e.request)))
-);
+// Chrome exige que el SW intercepte navegaciones y devuelva 200.
+
+self.addEventListener("fetch", (e) => {
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      caches.match("./index.html").then((r) => r || fetch(e.request))
+    );
+    return;
+  }
+  e.respondWith(caches.match(e.request).then((r) => r || fetch(e.request)));
+});
