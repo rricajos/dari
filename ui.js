@@ -30,15 +30,14 @@ const whenStart = document.getElementById("whenStart");
 const whenEnd = document.getElementById("whenEnd");
 const delSelBtn = document.getElementById("delSelBtn");
 
-swapBtn.onclick = () => {
-  const tmp = whenStart.value;
-  whenStart.value = whenEnd.value;
-  whenEnd.value = tmp;
-};
+const dateStart = document.getElementById("dateStart");
+const timeStart = document.getElementById("timeStart");
+const dateEnd = document.getElementById("dateEnd");
+const timeEnd = document.getElementById("timeEnd");
 
 let editIdx = null;
 
-/* ─ Barra progreso ─ */
+/* ─ Barra progreso de Steps ─ */
 const updateBar = (i) =>
   (bar.style.width = (i / (steps.length - 1)) * 100 + "%");
 const showStep = (i) => {
@@ -50,14 +49,30 @@ const showStep = (i) => {
   updateBar(i);
   window.scrollTo({ top: 0 });
 };
+
 nav.forEach((b) => (b.onclick = () => showStep(Number(b.dataset.step))));
 document.getElementById("next0").onclick = () => showStep(1);
 document.getElementById("back1").onclick = () => showStep(0);
 document.getElementById("next1").onclick = () => showStep(2);
 document.getElementById("back2").onclick = () => showStep(1);
 
+/* ─ Step 1 - Swap Button Date Time values ─ */
+swapBtn.onclick = () => {
+  [dateStart.value, dateEnd.value] = [dateEnd.value, dateStart.value];
+  [timeStart.value, timeEnd.value] = [timeEnd.value, timeStart.value];
+};
+
 /* ─ Formulario / edición ─ */
 const fillForm = (data, idx) => {
+  if (data.whenStart && data.whenEnd) {
+    const [ds, ts] = data.whenStart.split(" ");
+    const [de, te] = data.whenEnd.split(" ");
+    dateStart.value = ds;
+    timeStart.value = ts;
+    dateEnd.value = de;
+    timeEnd.value = te;
+  }
+
   Object.entries(data).forEach(([k, v]) => {
     if (form.elements[k]) {
       let v = (v_orig = v);
@@ -66,11 +81,13 @@ const fillForm = (data, idx) => {
       form.elements[k].value = v;
     }
   });
+
   editIdx = idx;
   cancelBtn.hidden = false;
   showTab("add");
   showStep(0);
 };
+
 cancelBtn.onclick = () => {
   form.reset();
   setDefaultTimes();
@@ -86,12 +103,16 @@ document.getElementById("clearFilter").onclick = () => {
   render();
 };
 searchTxt.oninput = () => render();
-document.getElementById("clearBtn").onclick = () => {
-  if (confirm("¿Borrar toda la base de datos?")) {
-    clearDB();
-    render();
-  }
-};
+
+const clearBtn = document.getElementById("clearBtn");
+if (clearBtn) {
+  clearBtn.onclick = () => {
+    if (confirm("¿Borrar toda la base de datos?")) {
+      clearDB();
+      render();
+    }
+  };
+}
 
 const passesFilter = (e) => {
   const d = e.whenStart.slice(0, 10);
@@ -216,8 +237,19 @@ form.addEventListener("submit", (ev) => {
   ev.preventDefault();
 
   const data = Object.fromEntries(new FormData(form));
-  if (!data.whenStart) data.whenStart = toLocalISO(new Date());
-  if (!data.whenEnd) data.whenEnd = toLocalISO(new Date());
+  const dStart = form.dateStart.value;
+  const tStart = form.timeStart.value;
+  const dEnd = form.dateEnd.value;
+  const tEnd = form.timeEnd.value;
+
+  data.whenStart =
+    dStart && tStart ? `${dStart} ${tStart}` : toLocalISO(new Date());
+  data.whenEnd = dEnd && tEnd ? `${dEnd} ${tEnd}` : toLocalISO(new Date());
+
+  delete data.dateStart;
+  delete data.timeStart;
+  delete data.dateEnd;
+  delete data.timeEnd;
 
   let targetIdx;
   if (editIdx === null) {
@@ -241,7 +273,7 @@ form.addEventListener("submit", (ev) => {
   setTimeout(() => {
     showTab("list");
     setTimeout(() => focusRow(targetIdx), 50);
-  }, 1200);
+  }, 0);
 });
 
 /* ─ Export / import ─ */
@@ -294,16 +326,16 @@ const roundHalfHour = (date, dir) => {
   return res;
 };
 
-/* ─ establecer valores por defecto ─ */
+/* ─ Paso 1 Establecer valores por defecto ─ */
 const setDefaultTimes = () => {
   const now = new Date();
-  const start = roundHalfHour(
-    new Date(now.getTime() - 30 * 60 * 1000),
-    "floor"
-  );
-  const end = roundHalfHour(new Date(now.getTime() + 30 * 60 * 1000), "ceil");
-  whenStart.value = toLocalISO(start);
-  whenEnd.value = toLocalISO(end);
+  const start = roundHalfHour(new Date(now.getTime() - 30 * 60000), "floor");
+  const end = roundHalfHour(new Date(now.getTime() + 30 * 60000), "ceil");
+
+  dateStart.value = start.toISOString().split("T")[0];
+  timeStart.value = `${pad(start.getHours())}:${pad(start.getMinutes())}`;
+  dateEnd.value = end.toISOString().split("T")[0];
+  timeEnd.value = `${pad(end.getHours())}:${pad(end.getMinutes())}`;
 };
 
 /* — Boton instalar PWA — */
@@ -328,6 +360,16 @@ window.addEventListener("appinstalled", () => {
   deferredPrompt = null;
   installBtn.hidden = true;
 });
+
+/* — Boton de filtrado — */
+const toggleFiltersBtn = document.getElementById("toggleFilters");
+const filterPanel = document.getElementById("filterPanel");
+
+toggleFiltersBtn.onclick = () => {
+  const visible = !filterPanel.hidden;
+  filterPanel.hidden = visible;
+  toggleFiltersBtn.textContent = visible ? "⏷" : "⏶";
+};
 
 /* ─ Inicio ─ */
 setDefaultTimes();

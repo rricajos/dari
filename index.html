@@ -55,9 +55,9 @@
   <i>versión 0.3 </i>
 
   <nav id="mainTabs">
-    <button data-go="add" class="active">🚀 Añadir</button>
-    <button data-go="list">📋 Listar</button>
-    <button data-go="settings">⚙️ Ajustar</button>
+    <button data-go="add" class="active"><span style="font-size: 1.5rem;">🚀</span><br><i>Lunch</i></button>
+    <button data-go="list"> <span style="font-size: 1.5rem;">📋</span><br><i>List</i></button>
+    <button data-go="settings"><span style="font-size: 1.5rem;">⚙️</span><br><i>Settings</i> </button>
   </nav>
 
   <!-- TAB: Añadir -->
@@ -82,13 +82,22 @@
           </select>
         </label><br>
 
-        <label>Inicio:
-          <input type="date" id="whenStart" class="dp" data-format="datetime">
+        <label>Fecha de inicio:
+          <input type="date" id="dateStart" name="dateStart" required>
         </label><br>
 
-        <label>Fin:
-          <input type="date" id="whenEnd" class="dp" data-format="datetime">
-        </label>
+        <label>Hora de inicio:
+          <input type="time" id="timeStart" name="timeStart" required>
+        </label><br>
+
+        <label>Fecha de fin:
+          <input type="date" id="dateEnd" name="dateEnd" required>
+        </label><br>
+
+        <label>Hora de fin:
+          <input type="time" id="timeEnd" name="timeEnd" required>
+        </label><br>
+
 
         <button type="button" id="swapDates">↔︎</button><br><br>
 
@@ -135,10 +144,12 @@
 
   <!-- TAB: Lista / Estadística -->
   <div data-tab="list">
-    <input type="search" id="searchTxt" placeholder="Buscar…">
+    <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+      <input type="search" id="searchTxt" placeholder="Buscar…" style="flex: 1;">
+      <button id="toggleFilters" title="Mostrar/ocultar filtros">⏷</button>
+    </div>
 
-
-    <div id="filterPanel">
+    <div id="filterPanel" hidden style="padding: 1rem;">
       <label>Desde <input type="date" id="fFrom"></label>
       <label>Hasta <input type="date" id="fTo"></label>
       <label>Estado
@@ -148,10 +159,11 @@
           <option value="ambar">🟠</option>
           <option value="rojo">🔴</option>
         </select>
-      </label>
-      <button id="applyFilter">Filtrar</button>
+      </label><br>
+      <button id="applyFilter">Filtrar</button><br>
       <button id="clearFilter">Limpiar</button>
     </div>
+
 
     <button id="delSelBtn" disabled>Eliminar seleccionados</button>
     <ul id="entries"></ul>
@@ -168,8 +180,8 @@
     <p>Tú alojas tu propia información en este dispositivo y eres el único responsable de su uso i difusión.</p>
     <!-- <button id="exportBtn">Exportar base de datos acutal</button> -->
     <button id="exportBtn">Administrar Base de Datos</button>
-    <!-- <input type="file" id="importInput" accept=".json"> -->
-    <!-- <button id="clearBtn">Borrar todo</button> -->
+    <input type="file" id="importInput" accept=".json">
+    <button id="clearBtn">Borrar todo</button>
 
   </div>
 

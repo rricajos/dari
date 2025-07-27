@@ -72,6 +72,7 @@ input[type="file"][hidden] {
   display: flex;
   flex-flow: row nowrap;
   gap: 0.5rem;
+  z-index: 10;
 }
 #mainTabs button {
   flex: 1;
@@ -295,6 +296,7 @@ ul#entries li.highlight {
 #filterPanel {
   display: flex;
   flex-wrap: wrap;
+
   gap: 0.5rem;
   margin: 0.5rem 0;
   font-size: 0.9rem;
@@ -303,9 +305,21 @@ ul#entries li.highlight {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  width: 100%;
 }
 input[type="search"] {
   margin: 0.5rem 0;
+}
+
+/* ---------- boton de eliminar ---------- */
+#delSelBtn {
+  background-color: #ff0000be;
+  color: white;
+  font-weight: bold;
+}
+#delSelBtn:disabled {
+  background-color: #ff6d6d38;
+  font-weight: normal;
 }
 
 /* ---------- util ---------- */
