@@ -371,6 +371,32 @@ toggleFiltersBtn.onclick = () => {
   toggleFiltersBtn.textContent = visible ? "⏷" : "⏶";
 };
 
+// modo noche activado/desactivado manualmente con detección del tema del dispositivo
+import { saveTheme, loadTheme } from "./storage.js";
+
+const themeToggle = document.getElementById("themeToggle");
+
+const applyTheme = () => {
+  const pref = loadTheme();
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  if (pref === "dark" || (!pref && prefersDark)) {
+    document.documentElement.classList.add("dark");
+    themeToggle.checked = true;
+  } else {
+    document.documentElement.classList.remove("dark");
+    themeToggle.checked = false;
+  }
+};
+
+themeToggle.onchange = () => {
+  const mode = themeToggle.checked ? "dark" : "light";
+  saveTheme(mode);
+  applyTheme();
+};
+
+applyTheme();
+
 /* ─ Inicio ─ */
 setDefaultTimes();
 

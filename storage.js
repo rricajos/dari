@@ -12,3 +12,9 @@ export const deleteEntry = (i) => {
   db.splice(i, 1);
   saveDB(db);
 };
+
+// modo noche activado/desactivado manualmente con detección del tema del dispositivo
+
+export const themeKey = "darinkTheme";
+export const saveTheme = (v) => localStorage.setItem(themeKey, v);
+export const loadTheme = () => localStorage.getItem(themeKey);

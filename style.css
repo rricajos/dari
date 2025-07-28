@@ -2,15 +2,30 @@
 :root {
   --c-bg: #f7f7f7;
   --c-bg-card: #fff;
+  --c-bg-button: #fff;
   --c-text: #222;
   --c-border: #ccc;
   --c-accent: #005a9c; /* alto contraste */
+  --c-bg-sub-accent: #005b9c31;
   --c-done: #2e8b57; /* verde accesible */
+  color-scheme: light dark;
 }
+
+.dark {
+  --c-bg: #1b1b1b;
+  --c-bg-card: #262626;
+  --c-text: #e8e8e8;
+  --c-border: #555;
+  --c-accent: #4aa3ff;
+  --c-bg-sub-accent: #4aa3ff;
+  --c-done: #58b66a;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --c-bg: #1b1b1b;
     --c-bg-card: #262626;
+    --c-bg-button: #fff;
     --c-text: #e8e8e8;
     --c-border: #555;
     --c-accent: #4aa3ff;
@@ -43,7 +58,7 @@ input[type="button"],
 input[type="submit"] {
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--c-border);
-  background: var(--c-bg-card);
+  background: var(--c-bg-sub-accent);
   border-radius: 4px;
   cursor: pointer;
   transition: 0.2s background, 0.2s border-color, 0.2s color;
@@ -329,6 +344,9 @@ input[type="search"] {
 
 /* ---------- responsive ---------- */
 @media (max-width: 600px) {
+  body {
+    margin-bottom: 100px;
+  }
   #mainTabs {
     position: fixed;
     left: 0;
