@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
   <title>Darink App</title>
   <style>
     h1 {
@@ -55,9 +56,22 @@
   <i>versión 0.5 </i>
 
   <nav id="mainTabs">
-    <button data-go="add" class="active"><span style="font-size: 1.5rem;">🚀</span><br><i>Lunch</i></button>
-    <button data-go="list"> <span style="font-size: 1.5rem;">📋</span><br><i>List</i></button>
-    <button data-go="settings"><span style="font-size: 1.5rem;">⚙️</span><br><i>Settings</i> </button>
+    <button data-go="add" class="active"><span style="font-size: 1.5rem;">
+        <i class="fa fa-rocket" aria-hidden="true"></i>
+      </span>
+      <br><i>Lunch</i>
+    </button>
+    <button data-go="list"> <span style="font-size: 1.5rem;">
+        <i class="fa fa-list" aria-hidden="true"></i>
+      </span>
+      <br><i>List</i>
+    </button>
+    <button data-go="settings">
+      <span style="font-size: 1.5rem;">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+      </span>
+      <br><i>Settings</i>
+    </button>
   </nav>
 
   <!-- TAB: Añadir -->
@@ -146,7 +160,9 @@
   <div data-tab="list">
     <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
       <input type="search" id="searchTxt" placeholder="Buscar…" style="flex: 1;">
-      <button id="toggleFilters" title="Mostrar/ocultar filtros">⏷</button>
+      <button id="toggleFilters" title="Mostrar/ocultar filtros">
+        <i class="fa fa-filter" aria-hidden="true"></i>
+      </button>
     </div>
 
     <div id="filterPanel" hidden style="padding: 1rem;">
@@ -176,20 +192,43 @@
 
   <!-- TAB: Ajustes -->
   <div data-tab="settings">
-    <h3>💾 Base de datos</h3>
+    <h3><i class="fa fa-database" aria-hidden="true"></i> Base de Datos</h3>
     <p>Tú alojas tu propia información en este dispositivo y eres el único responsable de su uso i difusión.</p>
     <!-- <button id="exportBtn">Exportar base de datos acutal</button> -->
-    <button id="exportBtn">Administrar Base de Datos</button>
-    <input type="file" id="importInput" accept=".json">
-    <button id="clearBtn">Borrar todo</button>
+    <div style="display: flex; gap: 1rem; align-items: flex-start; flex-direction: column;">
+
+      <button id="exportBtn">
+        <i class="fa fa-upload" aria-hidden="true"></i>
+
+        Exportar Base de Datos
+
+      </button>
+
+      <button style="position: relative;">
+
+        <i class="fa fa-download" aria-hidden="true"></i>
+        Importar Base de datos
+        <input type="file" id="importInput" accept=".json"
+          style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0;">
+      </button>
+
+      <button id="clearBtn">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+
+        Borrar tu información</button>
+    </div>
+
 
   </div>
 
   <!-- TAB: Ajustes  -->
   <div data-tab="settings">
-    <h3>🌙 Instalar App</h3>
+    <h3><i class="fa fa-plane" aria-hidden="true"></i> Modo Offline</h3>
     <p>Así podrás usar nuestras funciones sin conexión y trabajar con tu información aunque no tengas internet.</p>
-    <button id="installBtn" hidden>Instalar app</button>
+    <button id="installBtn" hidden>
+      <i class="fa fa-play" aria-hidden="true"></i>
+
+      Instalar app</button>
   </div>
 
   <!-- TAB: Ajustes // modo noche activado/desactivado manualmente con detección del tema del dispositivo -->
