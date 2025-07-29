@@ -13,15 +13,6 @@
       margin: 0;
     }
 
-    #progressNav button {
-      cursor: pointer
-    }
-
-    #progressNav button.active {
-      font-weight: bold;
-      text-decoration: underline
-    }
-
     #progressNav button.done {
       opacity: .6
     }
@@ -33,11 +24,7 @@
       margin: 8px 0
     }
 
-    #progressBar {
-      height: 100%;
-      width: 0;
-      background: #000
-    }
+
 
     [data-tab] {
       display: none
@@ -53,7 +40,7 @@
 
 <body>
   <h1>Darink App </h1>
-  <i>versión 0.7 </i>
+  <i>versión 0.7.2</i>
 
   <nav id="mainTabs">
     <button data-go="add" class="active"><span style="font-size: 1.5rem;">
@@ -89,15 +76,17 @@
     <form id="entryForm">
       <input type="hidden" id="editIndex">
       <section data-step="0">
-        <label>Lugar:
+        
+        <label>Lugar
           <select name="location" required>
             <option value="casa">Casa</option>
             <option value="colegio">Colegio/Trabajo</option>
             <option value="otro">Otro</option>
           </select>
-        </label><br>
+        </label>
 
-        <div id="timeDash" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        
+        <div id="timeDash">
           <button type="button" id="btnStartNow">Voy a empezar</button>
           <button type="button" id="btnEndNow">He terminado</button>
         </div>
@@ -159,7 +148,7 @@
         </label><br>
         <label>Comentario: <input type="text" name="comment"></label><br>
         <button type="button" id="back2">Atrás</button>
-        <button type="submit" class="focusable">Guardar</button>
+        <button type="submit" class="donnable">Guardar</button>
         <button type="button" id="cancelEdit" hidden>Cancelar edición</button>
       </section>
     </form>

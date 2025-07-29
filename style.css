@@ -5,6 +5,7 @@
   --c-text-button: #fff;
   --c-text: #222;
   --c-border: #ccc;
+  --c-cancel: #ff4a4a; /* alto contraste */
   --c-accent: #4aa3ff; /* alto contraste */
   --c-bg-sub-accent: #0080ff26;
   --c-done: #2e8b57; /* verde accesible */
@@ -52,6 +53,20 @@ body {
   line-height: 1.4;
 }
 
+#timeDash {
+  margin-top: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+button:disabled,
+button.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /* ---------- generic buttons ---------- */
 button,
 .fileBtn,
@@ -76,6 +91,12 @@ button:hover,
   background: var(--c-accent);
   color: #fff;
   border-color: var(--c-accent);
+  font-weight: bolder;
+}
+.donnable {
+  background: var(--c-done) !important;
+  color: #fff;
+  font-weight: bold;
 }
 
 button:focus,
@@ -89,6 +110,10 @@ button:focus,
 }
 input[type="file"][hidden] {
   display: none;
+}
+
+#cancelEdit {
+  background-color: var(--c-cancel);
 }
 
 /* ---------- main tabs ---------- */
@@ -107,6 +132,7 @@ input[type="file"][hidden] {
   color: #fff;
   border-color: var(--c-accent);
   font-weight: bold;
+  text-decoration: none;
 }
 
 /* ---------- tab panels ---------- */
@@ -135,6 +161,7 @@ input[type="file"][hidden] {
 #progressNav button.active {
   background: var(--c-accent);
   color: #fff;
+  font-weight: bold;
 }
 #progressNav button.done {
   background: var(--c-done);
@@ -192,6 +219,8 @@ ul#entries li {
   grid-template-rows: auto auto; /* fila1: texto  fila2: fecha-hora */
   gap: 4px;
   position: relative;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
 }
 
 /* esfera */
@@ -366,7 +395,7 @@ input[type="search"] {
   }
 
   ul#entries li {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     grid-template-columns: 32px 1fr auto;
   }
 

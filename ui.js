@@ -30,6 +30,7 @@ const whenStart = document.getElementById("whenStart");
 const whenEnd = document.getElementById("whenEnd");
 const delSelBtn = document.getElementById("delSelBtn");
 const timeDash = document.getElementById("timeDash");
+const nextBtn0 = document.getElementById("next0");
 
 const dateStart = document.getElementById("dateStart");
 const timeStart = document.getElementById("timeStart");
@@ -89,6 +90,8 @@ const fillForm = (data, idx) => {
   editIdx = idx;
   cancelBtn.hidden = false;
   timeDash.style.display = "none";
+  nextBtn0.disabled = true;
+  nextBtn0.classList.add("disabled");
   showTab("add");
   showStep(0);
 };
@@ -98,8 +101,15 @@ cancelBtn.onclick = () => {
   setDefaultTimes();
   editIdx = null;
   cancelBtn.hidden = true;
+  nextBtn0.disabled = false;
   timeDash.style.display = "flex";
+
   showStep(0);
+};
+
+timeDash.onclick = () => {
+  nextBtn0.disabled = false;
+  nextBtn0.classList.remove("disabled");
 };
 
 /* ─ Filtros / búsqueda ─ */
@@ -204,8 +214,6 @@ const render = () => {
     edit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
 
     edit.onclick = (ev) => {
-      document.getElementById("timeDash").style.display = "none";
-
       ev.stopPropagation();
       fillForm(e, idx);
     };
