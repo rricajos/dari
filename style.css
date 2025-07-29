@@ -2,11 +2,11 @@
 :root {
   --c-bg: #f7f7f7;
   --c-bg-card: #fff;
-  --c-bg-button: #fff;
+  --c-text-button: #fff;
   --c-text: #222;
   --c-border: #ccc;
-  --c-accent: #005a9c; /* alto contraste */
-  --c-bg-sub-accent: #005b9c31;
+  --c-accent: #4aa3ff; /* alto contraste */
+  --c-bg-sub-accent: #0080ff26;
   --c-done: #2e8b57; /* verde accesible */
   color-scheme: light dark;
 }
@@ -17,7 +17,8 @@
   --c-text: #e8e8e8;
   --c-border: #555;
   --c-accent: #4aa3ff;
-  --c-bg-sub-accent: #4aa3ff;
+
+  --c-bg-sub-accent: #005b9c31;
   --c-done: #58b66a;
 }
 
@@ -56,6 +57,7 @@ button,
 .fileBtn,
 input[type="button"],
 input[type="submit"] {
+  color: var(--c-text);
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--c-border);
   background: var(--c-bg-sub-accent);
@@ -64,17 +66,21 @@ input[type="submit"] {
   transition: 0.2s background, 0.2s border-color, 0.2s color;
   text-decoration: none;
 }
+
 button:hover,
-.fileBtn:hover {
+.fileBtn:hover,
+.focusable {
   background: var(--c-accent);
   color: #fff;
   border-color: var(--c-accent);
 }
+
 button:focus,
 .fileBtn:focus {
   outline: none;
   box-shadow: 0 0 0 2px var(--c-accent);
 }
+
 .fileBtn {
   display: inline-block;
 }
@@ -119,7 +125,7 @@ input[type="file"][hidden] {
   flex: 1;
   padding: 0.25rem 0;
   border: none;
-  background: #e5e5e5;
+  background: #0080ff26;
   border-radius: 2px;
   color: #000;
 }
@@ -153,6 +159,7 @@ select,
 textarea,
 input[type="text"],
 input[type="datetime-local"],
+input[type="time"],
 input[type="date"],
 input[type="search"] {
   width: 100%;
@@ -377,12 +384,6 @@ input[type="search"] {
   }
 }
 
-/* ---------- date controls scale ---------- */
-input[type="date"],
-input[type="datetime-local"] {
-  margin: 0.25rem;
-}
-
 /* ---------- date-picker (sin cambios salvo variables) ---------- */
 .datepicker {
   position: absolute;
@@ -395,6 +396,7 @@ input[type="datetime-local"] {
   font-size: calc(1rem * var(--dp-scale));
   display: none;
 }
+
 .datepicker .calHead {
   display: flex;
   justify-content: space-between;
@@ -402,6 +404,7 @@ input[type="datetime-local"] {
   font-weight: 600;
   margin-bottom: calc(0.25rem * var(--dp-scale));
 }
+
 .datepicker .calHead button {
   border: none;
   background: none;

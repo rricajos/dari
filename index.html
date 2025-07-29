@@ -53,7 +53,7 @@
 
 <body>
   <h1>Darink App </h1>
-  <i>versión 0.5 </i>
+  <i>versión 0.6 </i>
 
   <nav id="mainTabs">
     <button data-go="add" class="active"><span style="font-size: 1.5rem;">
@@ -62,9 +62,10 @@
       <br><i>Lunch</i>
     </button>
     <button data-go="list"> <span style="font-size: 1.5rem;">
-        <i class="fa fa-list" aria-hidden="true"></i>
+        <i class="fa fa-book" aria-hidden="true"></i>
+
       </span>
-      <br><i>List</i>
+      <br><i>LogBook</i>
     </button>
     <button data-go="settings">
       <span style="font-size: 1.5rem;">
@@ -96,26 +97,34 @@
           </select>
         </label><br>
 
-        <label>Fecha de inicio:
-          <input type="date" id="dateStart" name="dateStart" required>
-        </label><br>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button type="button" id="btnStartNow">Voy a empezar</button>
+          <button type="button" id="btnEndNow">He terminado</button>
+        </div>
+        <br>
 
-        <label>Hora de inicio:
-          <input type="time" id="timeStart" name="timeStart" required>
-        </label><br>
+        <div id="startFields">
+          <label>Fecha de inicio:
+            <input type="date" id="dateStart" name="dateStart" required>
+          </label><br>
+          <label>Hora de inicio:
+            <input type="time" id="timeStart" name="timeStart" required>
+          </label><br>
+        </div>
 
-        <label>Fecha de fin:
-          <input type="date" id="dateEnd" name="dateEnd" required>
-        </label><br>
+        <div id="endFields" hidden>
+          <label>Fecha de fin:
+            <input type="date" id="dateEnd" name="dateEnd" required>
+          </label><br>
+          <label>Hora de fin:
+            <input type="time" id="timeEnd" name="timeEnd" required>
+          </label><br>
+        </div>
 
-        <label>Hora de fin:
-          <input type="time" id="timeEnd" name="timeEnd" required>
-        </label><br>
 
+        <button type="button" id="swapDates" hidden>↔︎</button><br>
 
-        <button type="button" id="swapDates">↔︎</button><br><br>
-
-        <button type="button" id="next0">Siguiente</button>
+        <button type="button" id="next0" class="focusable">Siguiente</button>
 
       </section>
 
@@ -137,7 +146,7 @@
           </select>
         </label><br>
         <button type="button" id="back1">Atrás</button>
-        <button type="button" id="next1">Siguiente</button>
+        <button type="button" id="next1" class="focusable">Siguiente</button>
       </section>
 
       <section data-step="2" hidden>
@@ -150,7 +159,7 @@
         </label><br>
         <label>Comentario: <input type="text" name="comment"></label><br>
         <button type="button" id="back2">Atrás</button>
-        <button type="submit">Guardar</button>
+        <button type="submit" class="focusable">Guardar</button>
         <button type="button" id="cancelEdit" hidden>Cancelar edición</button>
       </section>
     </form>
@@ -233,7 +242,10 @@
 
   <!-- TAB: Ajustes // modo noche activado/desactivado manualmente con detección del tema del dispositivo -->
   <div data-tab="settings">
-    <h3>🌓 Tema</h3>
+    <h3>
+      <i class="fa fa-moon-o" aria-hidden="true"></i>
+      Tema
+    </h3>
     <label>
       <input type="checkbox" id="themeToggle"> Usar tema oscuro
     </label>

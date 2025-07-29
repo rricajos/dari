@@ -71,11 +71,14 @@ const fillForm = (data, idx) => {
     timeStart.value = ts;
     dateEnd.value = de;
     timeEnd.value = te;
+
+    // muestra ambos bloques al editar
+    startFields.hidden = false;
+    endFields.hidden = false;
   }
 
   Object.entries(data).forEach(([k, v]) => {
     if (form.elements[k]) {
-      let v = (v_orig = v);
       if (k === "whenStart" || k === "whenEnd")
         v = v.replace("T", " ").split(".")[0].replace("Z", "");
       form.elements[k].value = v;
@@ -324,6 +327,44 @@ const roundHalfHour = (date, dir) => {
     }
   }
   return res;
+};
+
+const btnStartNow = document.getElementById("btnStartNow");
+const btnEndNow = document.getElementById("btnEndNow");
+const startFields = document.getElementById("startFields");
+const endFields = document.getElementById("endFields");
+
+btnEndNow.onclick = () => {
+  const approxStart = roundHalfHour(new Date(Date.now() - 30 * 60000), "floor");
+  dateStart.value = approxStart.toISOString().split("T")[0];
+  timeStart.value = `${pad(approxStart.getHours())}:${pad(
+    approxStart.getMinutes()
+  )}`;
+
+  const approxEnd = new Date(Date.now());
+  dateEnd.value = approxEnd.toISOString().split("T")[0];
+  timeEnd.value = `${pad(approxEnd.getHours())}:${pad(approxEnd.getMinutes())}`;
+
+  console.log(timeEnd.value);
+
+  startFields.hidden = false;
+  endFields.hidden = true;
+};
+
+btnStartNow.onclick = () => {
+  const approxEnd = roundHalfHour(new Date(Date.now() + 30 * 60000), "ceil");
+  dateEnd.value = approxEnd.toISOString().split("T")[0];
+  timeEnd.value = `${pad(approxEnd.getHours())}:${pad(approxEnd.getMinutes())}`;
+
+  const approxStart = new Date(Date.now());
+  dateStart.value = approxStart.toISOString().split("T")[0];
+  timeStart.value = `${pad(approxStart.getHours())}:${pad(
+    approxStart.getMinutes()
+  )}`;
+  console.log(timeStart.value);
+
+  endFields.hidden = false;
+  startFields.hidden = true;
 };
 
 /* ─ Paso 1 Establecer valores por defecto ─ */
