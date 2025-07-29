@@ -99,6 +99,7 @@ const fillForm = (data, idx) => {
 cancelBtn.onclick = () => {
   form.reset();
   setDefaultTimes();
+  nextBtn0.disabled = true;
   editIdx = null;
   cancelBtn.hidden = true;
   nextBtn0.disabled = false;
@@ -109,7 +110,6 @@ cancelBtn.onclick = () => {
 
 timeDash.onclick = () => {
   nextBtn0.disabled = false;
-  nextBtn0.classList.remove("disabled");
 };
 
 /* ─ Filtros / búsqueda ─ */
@@ -363,6 +363,8 @@ btnEndNow.onclick = () => {
   dateEnd.value = approxEnd.toISOString().split("T")[0];
   timeEnd.value = `${pad(approxEnd.getHours())}:${pad(approxEnd.getMinutes())}`;
 
+  nextBtn0.disabled = false;
+
   startFields.hidden = false;
   endFields.hidden = true;
 };
@@ -380,6 +382,8 @@ btnStartNow.onclick = () => {
   timeStart.value = `${pad(approxStart.getHours())}:${pad(
     approxStart.getMinutes()
   )}`;
+
+  nextBtn0.disabled = false;
 
   endFields.hidden = false;
   startFields.hidden = true;
@@ -460,4 +464,5 @@ applyTheme();
 /* ─ Inicio ─ */
 setDefaultTimes();
 showStep(0);
+if (editIdx === null) nextBtn0.disabled = true;
 render();
