@@ -90,8 +90,8 @@ const fillForm = (data, idx) => {
   editIdx = idx;
   cancelBtn.hidden = false;
   timeDash.style.display = "none";
-  nextBtn0.disabled = true;
-  nextBtn0.classList.add("disabled");
+  nextBtn0.disabled = false;
+  nextBtn0.classList.remove("disabled");
   showTab("add");
   showStep(0);
 };
@@ -105,7 +105,12 @@ cancelBtn.onclick = () => {
   nextBtn0.disabled = false;
   timeDash.style.display = "flex";
 
+  startFields.hidden = true;
+  endFields.hidden = false;
+
+  showTab("list");
   showStep(0);
+  render();
 };
 
 timeDash.onclick = () => {

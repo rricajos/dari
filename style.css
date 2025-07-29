@@ -52,6 +52,14 @@ body {
   padding: 1rem;
   line-height: 1.4;
 }
+#cancelEdit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: white;
+  margin-top: 1rem;
+  display: block;
+}
 
 #timeDash {
   margin-top: 2rem;
@@ -205,6 +213,10 @@ textarea {
 }
 
 /* ---------- entries list ---------- */
+#entryForm {
+  position: relative;
+}
+
 ul#entries {
   list-style: none;
   padding: 0;
@@ -250,6 +262,12 @@ ul#entries li .ball {
 }
 .ball.rojo {
   background: #dc143c;
+}
+
+label {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
 }
 
 /* fila 1 — texto + lápiz */

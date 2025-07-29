@@ -40,7 +40,7 @@
 
 <body>
   <h1>Darink App </h1>
-  <i>versión 0.7.3</i>
+  <i>versión 0.7.4</i>
 
   <nav id="mainTabs">
     <button data-go="add" class="active"><span style="font-size: 1.5rem;">
@@ -93,19 +93,22 @@
         <br>
 
         <div id="startFields">
-          <label>Fecha de inicio:
+          <label>
+            <span>Fecha de <strong>inicio</strong></span>
             <input type="date" id="dateStart" name="dateStart" required>
           </label><br>
-          <label>Hora de inicio:
+          <label>
+            <span>Hora de <strong>inicio</strong></span>
             <input type="time" id="timeStart" name="timeStart" required>
           </label><br>
         </div>
 
         <div id="endFields" hidden>
-          <label>Fecha de fin:
+          <label>
+            <span>Fecha de <strong>fin</strong></span>
             <input type="date" id="dateEnd" name="dateEnd" required>
           </label><br>
-          <label>Hora de fin:
+          <label><span>Hora de <strong>fin</strong></span>
             <input type="time" id="timeEnd" name="timeEnd" required>
           </label><br>
         </div>
@@ -149,8 +152,8 @@
         <label>Comentario: <input type="text" name="comment"></label><br>
         <button type="button" id="back2">Atrás</button>
         <button type="submit" class="donnable">Guardar</button>
-        <button type="button" id="cancelEdit" hidden>Cancelar edición</button>
       </section>
+      <button type="button" id="cancelEdit" hidden>Cancelar edición</button>
     </form>
   </div>
 
