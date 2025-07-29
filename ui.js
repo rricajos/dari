@@ -29,6 +29,7 @@ const swapBtn = document.getElementById("swapDates");
 const whenStart = document.getElementById("whenStart");
 const whenEnd = document.getElementById("whenEnd");
 const delSelBtn = document.getElementById("delSelBtn");
+const timeDash = document.getElementById("timeDash");
 
 const dateStart = document.getElementById("dateStart");
 const timeStart = document.getElementById("timeStart");
@@ -87,6 +88,7 @@ const fillForm = (data, idx) => {
 
   editIdx = idx;
   cancelBtn.hidden = false;
+  timeDash.style.display = "none";
   showTab("add");
   showStep(0);
 };
@@ -96,6 +98,7 @@ cancelBtn.onclick = () => {
   setDefaultTimes();
   editIdx = null;
   cancelBtn.hidden = true;
+  timeDash.style.display = "flex";
   showStep(0);
 };
 
@@ -196,11 +199,13 @@ const render = () => {
       textContent: e.what || "–",
     });
 
-    const edit = Object.assign(document.createElement("button"), {
-      className: "editBtn",
-      textContent: "✏️",
-    });
+    const edit = document.createElement("button");
+    edit.className = "editBtn";
+    edit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+
     edit.onclick = (ev) => {
+      document.getElementById("timeDash").style.display = "none";
+
       ev.stopPropagation();
       fillForm(e, idx);
     };
@@ -269,6 +274,8 @@ form.addEventListener("submit", (ev) => {
   setDefaultTimes();
   editIdx = null;
   cancelBtn.hidden = true;
+  timeDash.style.display = "flex";
+
   showStep(0);
   render();
   fireConfetti();
@@ -335,6 +342,9 @@ const startFields = document.getElementById("startFields");
 const endFields = document.getElementById("endFields");
 
 btnEndNow.onclick = () => {
+  btnStartNow.classList.remove("focusable");
+  btnEndNow.classList.add("focusable");
+
   const approxStart = roundHalfHour(new Date(Date.now() - 30 * 60000), "floor");
   dateStart.value = approxStart.toISOString().split("T")[0];
   timeStart.value = `${pad(approxStart.getHours())}:${pad(
@@ -345,13 +355,14 @@ btnEndNow.onclick = () => {
   dateEnd.value = approxEnd.toISOString().split("T")[0];
   timeEnd.value = `${pad(approxEnd.getHours())}:${pad(approxEnd.getMinutes())}`;
 
-  console.log(timeEnd.value);
-
   startFields.hidden = false;
   endFields.hidden = true;
 };
 
 btnStartNow.onclick = () => {
+  btnStartNow.classList.add("focusable");
+  btnEndNow.classList.remove("focusable");
+
   const approxEnd = roundHalfHour(new Date(Date.now() + 30 * 60000), "ceil");
   dateEnd.value = approxEnd.toISOString().split("T")[0];
   timeEnd.value = `${pad(approxEnd.getHours())}:${pad(approxEnd.getMinutes())}`;
@@ -361,7 +372,6 @@ btnStartNow.onclick = () => {
   timeStart.value = `${pad(approxStart.getHours())}:${pad(
     approxStart.getMinutes()
   )}`;
-  console.log(timeStart.value);
 
   endFields.hidden = false;
   startFields.hidden = true;
@@ -404,12 +414,13 @@ window.addEventListener("appinstalled", () => {
 
 /* — Boton de filtrado — */
 const toggleFiltersBtn = document.getElementById("toggleFilters");
+const toggleFiltersBtnIcon = document.getElementById("toggleFiltersIcon");
 const filterPanel = document.getElementById("filterPanel");
 
 toggleFiltersBtn.onclick = () => {
   const visible = !filterPanel.hidden;
   filterPanel.hidden = visible;
-  toggleFiltersBtn.textContent = visible ? "⏷" : "⏶";
+  toggleFiltersBtnIcon.classList.toggle("flip-vertical");
 };
 
 // modo noche activado/desactivado manualmente con detección del tema del dispositivo
@@ -440,6 +451,5 @@ applyTheme();
 
 /* ─ Inicio ─ */
 setDefaultTimes();
-
 showStep(0);
 render();

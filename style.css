@@ -66,6 +66,9 @@ input[type="submit"] {
   transition: 0.2s background, 0.2s border-color, 0.2s color;
   text-decoration: none;
 }
+.flip-vertical {
+  transform: scaleY(-1);
+}
 
 button:hover,
 .fileBtn:hover,
@@ -363,7 +366,7 @@ input[type="search"] {
   }
 
   ul#entries li {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     grid-template-columns: 32px 1fr auto;
   }
 
