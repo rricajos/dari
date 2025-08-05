@@ -20,7 +20,7 @@
     #progressContainer {
       width: 100%;
       height: 4px;
-      background: #ccc;
+
       margin: 8px 0
     }
 
@@ -29,18 +29,44 @@
     [data-tab] {
       display: none
     }
+
+
+    body>* {
+      max-width: 720px;
+      width: 100%;
+      margin: 1rem auto !important;
+    }
   </style>
+
+  <!--registra el SW, mientras que InstallController maneja la UI del botón.-->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/darink/service-worker.js', { scope: '/darink/' }).catch(console.error);
+      navigator.serviceWorker.register('/darink/service-worker.js', { scope: '/darink/' })
+        .then(reg => {
+          reg.onupdatefound = () => {
+            const newSW = reg.installing;
+            newSW.onstatechange = () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm("Hay una nueva versión de la app. ¿Actualizar ahora?")) {
+                  window.location.reload();
+                }
+              }
+            };
+          };
+        })
+        .catch(console.error);
     }
+
   </script>
 
 </head>
 
 <body>
-  <h1>Darink App </h1>
-  <i>versión 0.7.4</i>
+  <header>
+    <h1>Darink App </h1>
+    <i id="appVersion">versión 0.7.4</i>
+  </header>
+
 
   <nav id="mainTabs">
     <button data-go="add" class="active"><span style="font-size: 1.5rem;">
@@ -76,7 +102,7 @@
     <form id="entryForm">
       <input type="hidden" id="editIndex">
       <section data-step="0">
-        
+
         <label>Lugar
           <select name="location" required>
             <option value="casa">Casa</option>
@@ -85,7 +111,7 @@
           </select>
         </label>
 
-        
+
         <div id="timeDash">
           <button type="button" id="btnStartNow">Voy a empezar</button>
           <button type="button" id="btnEndNow">He terminado</button>
@@ -197,7 +223,7 @@
     <h3><i class="fa fa-database" aria-hidden="true"></i> Base de Datos</h3>
     <p>Tú alojas tu propia información en este dispositivo y eres el único responsable de su uso i difusión.</p>
     <!-- <button id="exportBtn">Exportar base de datos acutal</button> -->
-    <div style="display: flex; gap: 1rem; align-items: flex-start; flex-direction: column;">
+    <div style="display: flex; gap: 1rem; align-items: flex-start; flex-direction: row;">
 
       <button id="exportBtn">
         <i class="fa fa-upload" aria-hidden="true"></i>
@@ -227,10 +253,17 @@
   <div data-tab="settings">
     <h3><i class="fa fa-plane" aria-hidden="true"></i> Modo Offline</h3>
     <p>Así podrás usar nuestras funciones sin conexión y trabajar con tu información aunque no tengas internet.</p>
+
     <button id="installBtn" hidden>
       <i class="fa fa-play" aria-hidden="true"></i>
+      Instalar app
+    </button>
 
-      Instalar app</button>
+    <button id="uninstallBtn" hidden>
+      <i class="fa fa-trash" aria-hidden="true"></i>
+      Desinstalar app
+    </button>
+
   </div>
 
   <!-- TAB: Ajustes // modo noche activado/desactivado manualmente con detección del tema del dispositivo -->
@@ -244,10 +277,10 @@
     </label>
 
   </div>
-
+  <!-- 
   <script type="module" src="ui.js"></script>
-  <script type="module" src="datepicker.js"></script>
-
+  <script type="module" src="datepicker.js"></script> -->
+  <script type="module" src="main.js"></script>
 </body>
 
 </html>

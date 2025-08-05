@@ -1,26 +1,50 @@
-const CACHE = "darink-cache-v1";
+// Este archivo debe ser regenerado al cambiar la versión
+const APP_VERSION = "2";
+const CACHE = `darink-cache-v${APP_VERSION}`;
+
+// Archivos esenciales para que la app funcione offline.
 const ASSETS = [
   "./",
   "./index.html",
-  "./ui.js",
+  "./main.js", // reemplaza ui.js si ya está modularizado
   "./storage.js",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
 ];
 
-self.addEventListener("install", (e) =>
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)))
-);
+// Evento de instalación: guarda en caché los archivos esenciales.
+self.addEventListener("install", (e) => {
+  e.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
+  self.skipWaiting(); // fuerza la activación del nuevo SW sin esperar reload
+  self.clients.claim(); // toma el control de todas las pestañas inmediatamente
+});
 
-// Chrome exige que el SW intercepte navegaciones y devuelva 200.
+// Evento de activación: elimina cachés antiguos que no coincidan con el nombre actual.
+self.addEventListener("activate", (e) => {
+  e.waitUntil(
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))
+        )
+      )
+  );
+  self.clients.claim(); // toma el control de todas las pestañas inmediatamente
+});
 
+// Evento de fetch: maneja todas las peticiones (HTML y otros recursos)
 self.addEventListener("fetch", (e) => {
   if (e.request.mode === "navigate") {
+    // Si es navegación (página HTML), devolver index.html del caché
     e.respondWith(
-      caches.match("./index.html").then((r) => r || fetch(e.request))
+      caches.match("./index.html").then((cached) => cached || fetch(e.request))
     );
-    return;
+  } else {
+    // Para imágenes, scripts, estilos, etc.
+    e.respondWith(
+      caches.match(e.request).then((cached) => cached || fetch(e.request))
+    );
   }
-  e.respondWith(caches.match(e.request).then((r) => r || fetch(e.request)));
 });

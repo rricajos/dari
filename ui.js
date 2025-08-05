@@ -99,17 +99,16 @@ const fillForm = (data, idx) => {
 cancelBtn.onclick = () => {
   form.reset();
   setDefaultTimes();
-  nextBtn0.disabled = true;
   editIdx = null;
   cancelBtn.hidden = true;
-  nextBtn0.disabled = false;
+  nextBtn0.disabled = true;
   timeDash.style.display = "flex";
 
-  startFields.hidden = true;
+  startFields.hidden = false;
   endFields.hidden = false;
 
-  showTab("list");
-  showStep(0);
+  showTab("add"); // << recargar tab Add
+  showStep(0); // << volver a paso 0
   render();
 };
 
@@ -288,6 +287,11 @@ form.addEventListener("submit", (ev) => {
   editIdx = null;
   cancelBtn.hidden = true;
   timeDash.style.display = "flex";
+
+  showTab("add");
+  startFields.hidden = false;
+  endFields.hidden = false;
+  nextBtn0.disabled = true;
 
   showStep(0);
   render();
