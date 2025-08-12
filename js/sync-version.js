@@ -2,7 +2,7 @@
 import fs from "fs";
 
 // 1. Leer la versión desde version.js
-const versionSource = fs.readFileSync("js/version.js", "utf-8");
+const versionSource = fs.readFileSync("./version.js", "utf-8");
 const match = versionSource.match(/APP_VERSION\s*=\s*["'](.+?)["']/);
 if (!match) throw new Error("No se encontró APP_VERSION en version.js");
 const version = match[1];

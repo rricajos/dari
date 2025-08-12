@@ -1,7 +1,7 @@
 // /main.js
-import EntryController from "./js/controllers/EntryController.js";
-import TabController from "./js/controllers/TabController.js";
-import { APP_VERSION } from "./js/version.js";
+import EntryController from "./controllers/EntryController.js";
+import TabController from "./controllers/TabController.js";
+import { APP_VERSION } from "./version.js";
 
 // version de la aplicación dinámica
 const el = document.getElementById("appVersion");

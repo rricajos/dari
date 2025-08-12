@@ -1,14 +1,14 @@
 // Este archivo debe ser regenerado al cambiar la versión
-const APP_VERSION = "2";
+const APP_VERSION = "8";
 const CACHE = `darink-cache-v${APP_VERSION}`;
 
 // Archivos esenciales para que la app funcione offline.
 const ASSETS = [
   "./",
   "./index.html",
-  "./main.js", // reemplaza ui.js si ya está modularizado
   "./storage.js",
   "./manifest.json",
+  "./js/main.js",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
 ];
@@ -16,7 +16,7 @@ const ASSETS = [
 // Evento de instalación: guarda en caché los archivos esenciales.
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
-  self.skipWaiting(); // fuerza la activación del nuevo SW sin esperar reload
+  -self.skipWaiting(); // fuerza la activación del nuevo SW sin esperar reload
   self.clients.claim(); // toma el control de todas las pestañas inmediatamente
 });
 

@@ -231,6 +231,8 @@ const EntryController = {
     const now = new Date();
     const end = roundHalfHour(new Date(now.getTime() + 30 * 60000), "ceil");
     this.setTimeFields(now, end);
+    document.getElementById("btnStartNow").classList.add("active");
+    document.getElementById("btnEndNow").classList.remove("active");
     this.startFields.hidden = true;
     this.endFields.hidden = false;
   },
@@ -239,6 +241,8 @@ const EntryController = {
     const now = new Date();
     const start = roundHalfHour(new Date(now.getTime() - 30 * 60000), "floor");
     this.setTimeFields(start, now);
+    document.getElementById("btnStartNow").classList.remove("active");
+    document.getElementById("btnEndNow").classList.add("active");
     this.startFields.hidden = false;
     this.endFields.hidden = true;
   },
